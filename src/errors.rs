@@ -47,3 +47,82 @@ impl fmt::Display for Error {
         }
     }
 }
+
+
+
+#[cfg(test)]
+mod test {
+    use std::error::Error as StdError;
+
+    use super::*;
+
+    #[test]
+    fn test_io_error_source() {
+        let err = Error::Io(std::io::ErrorKind::PermissionDenied.into());
+        let io_err = err
+            .source()
+            .unwrap()
+            .downcast_ref::<std::io::Error>()
+            .unwrap();
+        assert_eq!(std::io::ErrorKind::PermissionDenied, io_err.kind());
+    }
+
+    #[test]
+    fn test_envvar_error_source() {
+        let err = Error::EnvVar(std::env::VarError::NotPresent);
+        let var_err = err
+            .source()
+            .unwrap()
+            .downcast_ref::<std::env::VarError>()
+            .unwrap();
+        assert_eq!(&std::env::VarError::NotPresent, var_err);
+    }
+
+    #[test]
+    fn test_lineparse_error_source() {
+        let err = Error::LineParse("test line".to_string(), 2);
+        assert!(err.source().is_none());
+    }
+
+    #[test]
+    fn test_error_not_found_true() {
+        let err = Error::Io(std::io::ErrorKind::NotFound.into());
+        assert!(err.not_found());
+    }
+
+    #[test]
+    fn test_error_not_found_false() {
+        let err = Error::Io(std::io::ErrorKind::PermissionDenied.into());
+        assert!(!err.not_found());
+    }
+
+    #[test]
+    fn test_io_error_display() {
+        let err = Error::Io(std::io::ErrorKind::PermissionDenied.into());
+        let io_err: std::io::Error = std::io::ErrorKind::PermissionDenied.into();
+
+        let err_desc = format!("{}", err);
+        let io_err_desc = format!("{}", io_err);
+        assert_eq!(io_err_desc, err_desc);
+    }
+
+    #[test]
+    fn test_envvar_error_display() {
+        let err = Error::EnvVar(std::env::VarError::NotPresent);
+        let var_err = std::env::VarError::NotPresent;
+
+        let err_desc = format!("{}", err);
+        let var_err_desc = format!("{}", var_err);
+        assert_eq!(var_err_desc, err_desc);
+    }
+
+    #[test]
+    fn test_lineparse_error_display() {
+        let err = Error::LineParse("test line".to_string(), 2);
+        let err_desc = format!("{}", err);
+        assert_eq!(
+            "Error parsing line: 'test line', error at line index: 2",
+            err_desc
+        );
+    }
+}
