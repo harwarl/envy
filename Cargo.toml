@@ -3,4 +3,12 @@ name = "envy"
 version = "0.1.0"
 edition = "2024"
 
+authors = ["Oduwale Awwal harwarl87@gmail.com"]
+description = "A dotenv implementation for Rust"
+homepage = "https://github.com/harwarl/envy"
+license = "MIT"
+keywords = ["envrironment", "env", "config", "settings", "dotenv"]
+repository = "https://github.com/harwarl/envy"
+
+
 [dependencies]
