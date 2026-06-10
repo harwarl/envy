@@ -2,6 +2,8 @@
 
 [![Crates.io](https://img.shields.io/crates/v/envparser.svg)](https://crates.io/crates/envparser)
 
+> ⚠️ **Notice:** This crate is a word-for-word reimplementation of [dotenv](https://crates.io/crates/dotenv) written purely as a Rust learning exercise. Full credit to the [original authors](https://github.com/dotenv-rs/dotenv). Please use the original `dotenv` crate in production.
+
 A dotenv implementation for Rust. Loads environment variables from a `.env` file and merges them with the actual environment variables provided by the OS.
 
 > Storing [configuration in the environment](http://www.12factor.net/config)
@@ -79,3 +81,5 @@ envparser -f .env.production cargo run
 ## License
 
 MIT — [github.com/harwarl/envy](https://github.com/harwarl/envy)
+
+Original crate: [github.com/dotenv-rs/dotenv](https://github.com/dotenv-rs/dotenv)
