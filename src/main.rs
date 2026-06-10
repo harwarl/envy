@@ -1,7 +1,7 @@
-use std::process::{exit, Command};
-use std::os::unix::process::CommandExt;
 use clap::{Arg, Command as ClapCommand};
 use envparser;
+use std::os::unix::process::CommandExt;
+use std::process::{Command, exit};
 
 macro_rules! die {
     ($fmt:expr) => ({
