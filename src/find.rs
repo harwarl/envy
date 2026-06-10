@@ -27,7 +27,6 @@ impl<'a> Finder<'a> {
     }
 
     pub fn find(self) -> Result<(PathBuf, Iter<File>)> {
-        // TODO: change String to Iter Type
         // get the current directory and the specified file name and find the file
         let path = find(&env::current_dir().map_err(Error::Io)?, self.filename)?;
         let file = File::open(&path).map_err(Error::Io)?;
