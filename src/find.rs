@@ -5,7 +5,10 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use crate::errors::{Error, Result};
+use crate::{
+    errors::{Error, Result},
+    iter::Iter,
+};
 
 pub struct Finder<'a> {
     filename: &'a Path,
@@ -23,13 +26,13 @@ impl<'a> Finder<'a> {
         self
     }
 
-    pub fn find(self) -> Result<(PathBuf, String)> {
+    pub fn find(self) -> Result<(PathBuf, Iter<File>)> {
         // TODO: change String to Iter Type
         // get the current directory and the specified file name and find the file
         let path = find(&env::current_dir().map_err(Error::Io)?, self.filename)?;
         let file = File::open(&path).map_err(Error::Io)?;
-        // TODO: read the file using iter
-        todo!()
+        let iter = Iter::new(file);
+        Ok((path, iter))
     }
 }
 

@@ -10,7 +10,18 @@ license = "MIT"
 keywords = ["envrironment", "env", "config", "settings", "dotenv"]
 repository = "https://github.com/harwarl/envy"
 
+[lib]
+name = "envparser"
+path = "src/lib.rs"
+
+[[bin]]
+name = "envparser"
+path = "src/main.rs"
+required-features = ["cli"]
 
 [dependencies]
-clap = { version = "4.6.1", features = ["derive"] }
+clap = { version = "4.6.1", optional = true, features = ["derive"] }
+
+[features]
+cli = ["clap"]
 
