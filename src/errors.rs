@@ -48,8 +48,6 @@ impl fmt::Display for Error {
     }
 }
 
-
-
 #[cfg(test)]
 mod test {
     use std::error::Error as StdError;
